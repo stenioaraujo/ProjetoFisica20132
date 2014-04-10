@@ -166,6 +166,9 @@ class Plano {
 		if (this.eterAtivado) return 4.8;
 		return 0;
 	}
+	setEterAtivado(b: bollean): void {
+		this.eterAtivado = b;
+	}
 	
 	getComprimento(): number {
 		return this.comprimento;
