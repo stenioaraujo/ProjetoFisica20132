@@ -110,6 +110,7 @@ var Plano = (function () {
     function Plano() {
         this.vLuz = 46;
         this.eter = false;
+        this.vEter = 4.6;
         this.particulas = new Array();
     }
     Plano.prototype.setComprimento = function (comprimento) {
