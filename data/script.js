@@ -37,14 +37,45 @@ var Particula = (function () {
     };
 
     //
-    // @return Retorna o tempo que a particula gasta para percorrer 1 px
+    // @return Retorna o tempo(ms) que a particula gasta para percorrer 1 px
     //
-    Particula.prototype.getVelocidade = function () {
+    Particula.prototype.getVelocidade = function (x, y) {
         var vLuz = this.plano.getVLuz();
-        var eter = this.plano.eterExiste();
+        var vEter = this.plano.getVEter();
         var inclinacao = this.plano.getInclinacao();
+        if (vEter == 0) {
+            return this.calcVelocidade(0, x, y);
+        } else if (inclinacao == 0 || inclinacao == 180) {
+            return this.calcVelocidade(3, x, y);
+        } else if (inclinacao == 90 || inclinacao == 270) {
+            return this.calcVelocidade(1, x, y);
+        }
+        return this.calcVelocidade(2, x, y);
+    };
 
-        return 21;
+    //
+    //método auxiliar de getVelocidade para calcular a velocidade
+    //
+    Particula.prototype.calcVelocidade = function (n, x, y) {
+        if (n == 0) {
+            return this.equacao(0);
+        } else if (n == 1) {
+            return this.equacao(1);
+        } else if (n == 2) {
+            if (this.particula.x < x) {
+                return this.equacao(2);
+            }
+            return this.equacao(-2);
+        } else {
+            if (this.particula.x < x) {
+                return this.equacao(3);
+            }
+            return this.equacao(-3);
+        }
+    };
+
+    Particula.prototype.equacao = function (n) {
+        return ((this.plano.getComprimento() / this.plano.getVLuz()) * (1 + (10 * ((this.plano.getVEter() * this.plano.getVEter() / this.plano.getVLuz() * this.plano.getVLuz()) * n))) * 1000) / this.plano.getComprimento();
     };
 
     //
@@ -92,7 +123,7 @@ var Particula = (function () {
 
             setTimeout(function () {
                 mover(particula);
-            }, this.getVelocidade());
+            }, particula.getVelocidade(xFinal, yFinal));
         };
         mover(this);
     };
@@ -109,7 +140,7 @@ var Particula = (function () {
 var Plano = (function () {
     function Plano() {
         this.vLuz = 46;
-        this.eter = false;
+        this.eterAtivado = false;
         this.vEter = 4.6;
         this.particulas = new Array();
     }
@@ -121,8 +152,13 @@ var Plano = (function () {
         return this.vLuz;
     };
 
-    Plano.prototype.eterExiste = function () {
-        return this.eter;
+    Plano.prototype.getVEter = function () {
+        if (this.eterAtivado)
+            return 4.8;
+        return 0;
+    };
+    Plano.prototype.setEterAtivado = function (b) {
+        this.eterAtivado = b;
     };
 
     Plano.prototype.getComprimento = function () {
@@ -134,7 +170,15 @@ var Plano = (function () {
     };
 
     Plano.prototype.getInclinacao = function () {
+        return this.inclinacao % 360;
+    };
+
+    Plano.prototype.getInclinacaoLiteral = function () {
         return this.inclinacao;
+    };
+
+    Plano.prototype.setInclinacao = function (g) {
+        this.inclinacao = g;
     };
 
     Plano.prototype.addParticula = function (particula) {
@@ -149,15 +193,16 @@ var Plano = (function () {
 })();
 
 $(document).ready(function () {
+    var plano = new Plano();
+
     $("#teste").click(function () {
         var circulo = $("#circulo");
-        var angle = parseInt(circulo.attr("angle")) + 45;
+        var angle = plano.getInclinacaoLiteral() + 45;
 
         circulo.css("-webkit-transform", "rotate(" + angle + "deg)");
         circulo.attr("angle", angle);
+        plano.setInclinacao(angle);
     });
-
-    var plano = new Plano();
 
     var lancar = function () {
         var particula = $("<div class='particula' />");
