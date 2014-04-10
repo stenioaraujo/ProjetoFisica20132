@@ -16,8 +16,8 @@ var Util = (function () {
 //  Representação de uma particula
 //
 var Particula = (function () {
-    function Particula(particula, x, y) {
-        this.particula = particula;
+    function Particula(x, y) {
+        this.particula = $("<div class='particula' />");
         this.setPosicao(x, y);
     }
     //
@@ -131,6 +131,10 @@ var Particula = (function () {
     Particula.prototype.setPlano = function (plano) {
         this.plano = plano;
     };
+
+    Particula.prototype.getElement = function () {
+        return this.particula;
+    };
     return Particula;
 })();
 
@@ -138,10 +142,13 @@ var Particula = (function () {
 // O Plano contendo as particulas
 //
 var Plano = (function () {
-    function Plano() {
+    //
+    // @param id, o id do elemento que representara o plano
+    function Plano(id) {
         this.vLuz = 46;
         this.eterAtivado = false;
         this.vEter = 4.6;
+        this.id = id;
         this.particulas = new Array();
     }
     Plano.prototype.setComprimento = function (comprimento) {
@@ -179,6 +186,10 @@ var Plano = (function () {
 
     Plano.prototype.setInclinacao = function (g) {
         this.inclinacao = g;
+        var circulo = $("#" + this.id);
+
+        circulo.css("-webkit-transform", "rotate(" + this.inclinacao + "deg)");
+        circulo.attr("angle", this.inclinacao);
     };
 
     Plano.prototype.addParticula = function (particula) {
@@ -193,25 +204,17 @@ var Plano = (function () {
 })();
 
 $(document).ready(function () {
-    var plano = new Plano();
+    var plano = new Plano("circulo");
 
     $("#teste").click(function () {
-        var circulo = $("#circulo");
-        var angle = plano.getInclinacaoLiteral() + 45;
-
-        circulo.css("-webkit-transform", "rotate(" + angle + "deg)");
-        circulo.attr("angle", angle);
-        plano.setInclinacao(angle);
+        plano.setInclinacao(plano.getInclinacaoLiteral() + 45);
     });
 
     var lancar = function () {
-        var particula = $("<div class='particula' />");
-        $("#circulo").append(particula);
+        var particula = new Particula(20, 245);
+        plano.addParticula(particula);
 
-        var particulaInicial = new Particula(particula, 20, 245);
-        plano.addParticula(particulaInicial);
-
-        particulaInicial.setPosicaoAnimate(150, 250, function () {
+        particula.setPosicaoAnimate(245, 245, function () {
         });
     };
 
