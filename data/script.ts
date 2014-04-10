@@ -166,7 +166,7 @@ class Plano {
 		if (this.eterAtivado) return 4.8;
 		return 0;
 	}
-	setEterAtivado(b: bollean): void {
+	setEterAtivado(b: boolean): void {
 		this.eterAtivado = b;
 	}
 	
