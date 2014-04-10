@@ -47,15 +47,15 @@ class Particula {
 		var vLuz = this.plano.getVLuz();
 		var vEter = this.plano.getVEter();
 		var inclinacao = this.plano.getInclinacao();
-		if(VEter == 0){
-			return calcVelocidade(0, x, y);
+		if(vEter == 0){
+			return this.calcVelocidade(0, x, y);
 		}else if (inclinacao == 0 || inclinacao == 180) {
-			return calcVelocidade(3, x, y);			
+			return this.calcVelocidade(3, x, y);			
 		}
 		else if (inclinacao == 90 || inclinacao == 270) {
-			return calcVelocidade(1, x, y);			
+			return this.calcVelocidade(1, x, y);			
 		}
-		return calcVelocidade(2, x, y);	
+		return this.calcVelocidade(2, x, y);	
 	}
 	
 	//
@@ -63,19 +63,19 @@ class Particula {
 	//
 	private calcVelocidade(n: number, x: number, y: number): number{
 		if (n == 0) {
-			return equacao(0);
+			return this.equacao(0);
 		}else if (n == 1) {
-			return equacao(1);
+			return this.equacao(1);
 		}else if (n == 2) {
 			if (this.particula.x < x) {
-				return equacao(2);
+				return this.equacao(2);
 			}
-			return equacao(-2);			
+			return this.equacao(-2);			
 		}else{
 			if (this.particula.x < x) {
-				return equacao(3);
+				return this.equacao(3);
 			}
-			return equacao(-3);				
+			return this.equacao(-3);				
 		}
 		
 		
@@ -163,7 +163,7 @@ class Plano {
 	}
 	
 	getVEter(): number {
-		if (eterAtivado) return 4.8;
+		if (this.eterAtivado) return 4.8;
 		return 0;
 	}
 	
