@@ -1,4 +1,5 @@
 class Util {
+	
 	//
 	// Indica se o Número é negativo, nulo ou positivo
 	// @param x O número a ser verificado.
@@ -45,7 +46,7 @@ class Particula {
 	getVelocidade(x: number, y: number): number {
 		var vLuz = this.plano.getVLuz();
 		var vEter = this.plano.getVEter();
-		var inclinacao = (this.plano.getInclinacao())%360;
+		var inclinacao = this.plano.getInclinacao();
 		if(VEter == 0){
 			return calcVelocidade(0, x, y);
 		}else if (inclinacao == 0 || inclinacao == 180) {
@@ -56,10 +57,11 @@ class Particula {
 		}
 		return calcVelocidade(2, x, y);	
 	}
+	
 	//
 	//método auxiliar de getVelocidade para calcular a velocidade
 	//
-	calcVelocidade(n: number, x: number, y: number): number{
+	private calcVelocidade(n: number, x: number, y: number): number{
 		if (n == 0) {
 			return equacao(0);
 		}else if (n == 1) {
@@ -174,7 +176,15 @@ class Plano {
 	}
 	
 	getInclinacao(): number {
+		return this.inclinacao % 360;
+	}
+	
+	getInclinacaoLiteral(): number {
 		return this.inclinacao;
+	}
+	
+	setInclinacao(g: number): void {
+		this.inclinacao = g;
 	}
 	
 	addParticula(particula: Particula): void {
@@ -189,15 +199,16 @@ class Plano {
 
 
 $(document).ready(function() {
+	var plano = new Plano();
+	
 	$("#teste").click(function() {
 		var circulo = $("#circulo");
-		var angle = parseInt(circulo.attr("angle")) + 45;
+		var angle =  plano.getInclinacaoLiteral()+ 45;
 
 		circulo.css("-webkit-transform", "rotate("+angle+"deg)");
 		circulo.attr("angle", angle);
+		plano.setInclinacao(angle);
 	});
-	
-	var plano = new Plano();
 	
 	var lancar = function() {
 		var particula = $("<div class='particula' />");
