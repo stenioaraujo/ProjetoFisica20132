@@ -82,24 +82,13 @@ body {
 	background: rgba(135, 206, 250, 0.61);
 }
 
-#particle {
+.particula {
 	position: absolute;
+	background: #000;
+	border-radius: 50%;
 	display: block;
-	top: 245;
-	left: 20px;
-	width: 10px;
-	height: 10px;
-	background: #000;
-	border-radius: 50%;
-}
-
-#particleHorizontal,#particleVertical {
-	position: absolute;
-	background: #000;
-	border-radius: 50%;
-	display: none;
-	top: 245px;
-	left: 245px;
+	top: 0px;
+	left: 0px;
 	width: 10px;
 	height: 10px;
 }
