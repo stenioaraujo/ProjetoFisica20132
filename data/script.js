@@ -1,4 +1,3 @@
-
 // CONSTANTES
 var lightSpeed = 46; //px/s
 
@@ -15,8 +14,8 @@ $(document).ready(function() {
 	});
 
 
-	//Movendo do lançador até o espelho central
-	moveHorizontalUp("#particle", "250px", function() {
+	//Movendo do lanï¿½ador atï¿½ o espelho central
+	moveHorizontalUp("#particle", "245px", function() {
 		$("#particle").css("display", "none");
 		criaHorizontal();
 		criaVertical();
@@ -30,7 +29,7 @@ $(document).ready(function() {
 
 		// Move parte da horizontal
 		moveHorizontalUp("#particleHorizontal", "470px", function(){
-			moveHorizontalDown("#particleHorizontal", "250px");
+			moveHorizontalDown("#particleHorizontal", "245px");
 		});
 	}
 
@@ -41,12 +40,12 @@ $(document).ready(function() {
 
 		// Move parte da horizontal
 		moveVerticalDown("#particleVertical", "20px", function(){
-			moveVerticalUp("#particleVertical", "250px");
+			moveVerticalUp("#particleVertical", "245px");
 		});
 	}
 
 	//Mover horizontal
-	//px é o destino final
+	//px ï¿½ o destino final
 	function moveHorizontalUp(id, px, callback) {
 		px = parseInt(px.replace("px",""));
 		var obj = $(id);
@@ -83,7 +82,7 @@ $(document).ready(function() {
 	}
 
 	//Mover horizontal
-	//px é o destino final
+	//px ï¿½ o destino final
 	function moveVerticalUp(id, px, callback) {
 		px = parseInt(px.replace("px",""));
 		var obj = $(id);
