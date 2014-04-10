@@ -57,7 +57,7 @@
 			}
 			
 			#espelhoCentro {
-				top: 240px;
+				top: 245px;
 				left: 150px;
 				height: 5px;
 				-webkit-transform:rotate(135deg);
@@ -100,12 +100,133 @@
 				border-radius: 50%;
 				display: none;
 				top: 245px;
-				left: 250px;
+				left: 245px;
 				width: 10px;
 				height: 10px;
 			}
 		</style>
+<<<<<<< HEAD
 		<script type="text/javascript" src="data/script.js"></script>
+=======
+		<script type="text/javascript">
+			// CONSTANTES
+			var lightSpeed = 46; //px/s
+			
+			// VARIAVEIS
+			var eterSpeed = 0;
+
+			$(document).ready(function() {
+				$("#teste").click(function() {
+					var circulo = $("#circulo");
+					var angle = parseInt(circulo.attr("angle")) + 45;
+					
+					circulo.css("-webkit-transform", "rotate("+angle+"deg)");
+					circulo.attr("angle", angle);
+				});
+				
+			  
+			  //Movendo do lançador até o espelho central
+			  moveHorizontalUp("#particle", "245px", function() {
+				$("#particle").css("display", "none");
+				criaHorizontal();
+				criaVertical();
+			  });
+			  
+			  //Criando particulas
+			  function criaHorizontal() {
+				var horizontal = $("#particleHorizontal");
+				
+				horizontal.css("display", "block");
+				
+				// Move parte da horizontal
+				moveHorizontalUp("#particleHorizontal", "470px", function(){
+					moveHorizontalDown("#particleHorizontal", "245px", function(){});
+				});
+			  }
+			  
+			  function criaVertical() {
+				var horizontal = $("#particleVertical");
+				
+				horizontal.css("display", "block");
+				
+				// Move parte da horizontal
+				moveVerticalDown("#particleVertical", "20px", function(){});
+			  }
+			  
+			  //Mover horizontal
+			  //px é o destino final
+			  function moveHorizontalUp(id, px, callback) {
+				px = parseInt(px.replace("px",""));
+				var obj = $(id);
+				
+				var posX = parseInt(obj.css("left").replace("px",""));
+				
+				var interval = setInterval(function() {
+					if (posX < px) {
+						obj.css("left", posX+1);
+						posX += 1;
+					}else {
+						clearInterval(this);
+						callback();
+					}
+				}, 21.739130);
+				
+			  }
+			  function moveHorizontalDown(id, px, callback) {
+				px = parseInt(px.replace("px",""));
+				var obj = $(id);
+				
+				var posX = parseInt(obj.css("left").replace("px",""));
+				
+				var interval = setInterval(function() {
+					if (posX > px) {
+						obj.css("left", posX-1);
+						posX -= 1;
+					}else {
+						clearInterval(this);
+						callback();
+					}
+				}, 21.739130);
+				
+			  }
+			  
+			  //Mover horizontal
+			  //px é o destino final
+			  function moveVerticalUp(id, px, callback) {
+				px = parseInt(px.replace("px",""));
+				var obj = $(id);
+				
+				var posY = parseInt(obj.css("top").replace("px",""));
+				
+				var interval = setInterval(function() {
+					if (posY < px) {
+						obj.css("top", posY+1);
+						posY += 1;
+					}else {
+						callback();
+					}
+				}, 21.739130);
+				
+			  }
+			  function moveVerticalDown(id, px, callback) {
+				px = parseInt(px.replace("px",""));
+				var obj = $(id);
+				
+				var posY = parseInt(obj.css("top").replace("px",""));
+				
+				var interval = setInterval(function() {
+					if (posY > px) {
+						obj.css("top", posY-1);
+						posY -= 1;
+					}else {
+						callback();
+					}
+				}, 21.739130);
+				
+			  }
+			});
+		</script>
+>>>>>>> bb67c0d468e1a684fbdc5379438d2c248e083241
 	</head>
 	<body>
 		<div id="teste">
