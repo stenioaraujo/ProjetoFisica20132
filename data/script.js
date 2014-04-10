@@ -43,6 +43,7 @@ var Particula = (function () {
         var vLuz = this.plano.getVLuz();
         var vEter = this.plano.getVEter();
         var inclinacao = this.plano.getInclinacao();
+
         if (vEter == 0) {
             return this.calcVelocidade(0, x, y);
         } else if (inclinacao == 0 || inclinacao == 180) {
@@ -110,15 +111,17 @@ var Particula = (function () {
             var dX = xFinal - particula.x;
             var dY = yFinal - particula.y;
 
+            if (dX == 0 && dY == 0) {
+                if (callback)
+                    callback();
+                return;
+            }
+
             if (sinal(dX) == 0 || sinal(dY) == 0) {
                 particula.setPosicao(particula.x + sinal(dX), particula.y + sinal(dY));
             } else if (particula.x != xFinal || particula.y != yFinal) {
                 x = particula.x + sinal(dX);
                 particula.setPosicao(x, f(x));
-            } else {
-                if (callback)
-                    callback();
-                return;
             }
 
             setTimeout(function () {
@@ -134,6 +137,11 @@ var Particula = (function () {
 
     Particula.prototype.getElement = function () {
         return this.particula;
+    };
+
+    Particula.prototype.destruir = function () {
+        this.particula.remove();
+        delete this;
     };
     return Particula;
 })();
@@ -187,13 +195,14 @@ var Plano = (function () {
     Plano.prototype.setInclinacao = function (g) {
         this.inclinacao = g;
         var circulo = $("#" + this.id);
-
+        console.log(circulo);
         circulo.css("-webkit-transform", "rotate(" + this.inclinacao + "deg)");
         circulo.attr("angle", this.inclinacao);
     };
 
     Plano.prototype.addParticula = function (particula) {
         this.particulas.push(particula);
+        $("#" + this.id).prepend(particula.getElement());
         particula.setPlano(this);
     };
 
@@ -215,6 +224,42 @@ $(document).ready(function () {
         plano.addParticula(particula);
 
         particula.setPosicaoAnimate(245, 245, function () {
+            var particulaVai = new Particula(245, 245);
+            var particulaSobe = new Particula(245, 245);
+            particulaVai.setColor("red");
+            particulaSobe.setColor("purple");
+            plano.addParticula(particulaVai);
+            plano.addParticula(particulaSobe);
+
+            particula.destruir();
+
+            particulaVai.setPosicaoAnimate(480, 245, function () {
+                particulaVai.setPosicaoAnimate(245, 245, function () {
+                    if (particulaVai.getPosicao() == particulaSobe.getPosicao()) {
+                        particulaVai.destruir();
+                        particulaSobe.destruir();
+
+                        var particulaResultante = new Particula(245, 245);
+                        particula.setColor("yellow");
+                        plano.addParticula(particulaResultante);
+
+                        particulaResultante.setPosicaoAnimate(245, 480, function () {
+                        });
+                    } else {
+                        particulaVai.setPosicaoAnimate(245, 480, function () {
+                        });
+                    }
+                });
+            });
+
+            particulaSobe.setPosicaoAnimate(245, 20, function () {
+                particulaSobe.setPosicaoAnimate(245, 245, function () {
+                    if (particulaVai.getPosicao() != particulaSobe.getPosicao()) {
+                        particulaSobe.setPosicaoAnimate(245, 480, function () {
+                        });
+                    }
+                });
+            });
         });
     };
 
