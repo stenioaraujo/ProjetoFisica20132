@@ -44,7 +44,7 @@ class Particula {
 	//
 	getVelocidade(): number {
 		var vLuz = this.plano.getVLuz();
-		var eter = this.plano.eterExiste();
+		var vEter = this.plano.getVEter();
 		var inclinacao = this.plano.getInclinacao();
 		
 		return 21;
@@ -108,7 +108,7 @@ class Particula {
 class Plano {
 	particulas: Array<Particula>;
 	vLuz = 46; // px/ms
-	eter = false;
+	eterAtivado = false;
 	vEter = 4.6;
 	comprimento: number; //px
 	inclinacao: number; //graus
@@ -125,8 +125,9 @@ class Plano {
 		return this.vLuz;
 	}
 	
-	eterExiste(): boolean {
-		return this.eter;
+	getVEter(): number {
+		if (eterAtivado) return 4.8;
+		return 0;
 	}
 	
 	getComprimento(): number {
