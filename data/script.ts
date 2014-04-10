@@ -19,8 +19,8 @@ class Particula {
 	particula;
 	plano: Plano;
 	
-	constructor(particula, x: number, y: number) {
-		this.particula = particula;
+	constructor(x: number, y: number) {
+		this.particula = $("<div class='particula' />");
 		this.setPosicao(x, y);
 	}
 	
@@ -137,6 +137,10 @@ class Particula {
 	setPlano(plano: Plano) {
 		this.plano = plano;
 	}
+	
+	getElement(): Object {
+		return this.particula;
+	}
 }
 
 //
@@ -149,8 +153,12 @@ class Plano {
 	vEter = 4.6;
 	comprimento: number; //px
 	inclinacao: number; //graus
+	id: string;
 	
-	constructor() {
+	//
+	// @param id, o id do elemento que representara o plano
+	constructor(id: string) {
+		this.id = id;
 		this.particulas = new Array();
 	}
 	
@@ -188,6 +196,10 @@ class Plano {
 	
 	setInclinacao(g: number): void {
 		this.inclinacao = g;
+		var circulo = $("#"+this.id);
+		
+		circulo.css("-webkit-transform", "rotate("+this.inclinacao+"deg)");
+		circulo.attr("angle", this.inclinacao);
 	}
 	
 	addParticula(particula: Particula): void {
@@ -202,25 +214,19 @@ class Plano {
 
 
 $(document).ready(function() {
-	var plano = new Plano();
+	var plano = new Plano("circulo");
 	
 	$("#teste").click(function() {
-		var circulo = $("#circulo");
-		var angle =  plano.getInclinacaoLiteral()+ 45;
-
-		circulo.css("-webkit-transform", "rotate("+angle+"deg)");
-		circulo.attr("angle", angle);
-		plano.setInclinacao(angle);
+		plano.setInclinacao(plano.getInclinacaoLiteral()+ 45);
 	});
 	
 	var lancar = function() {
-		var particula = $("<div class='particula' />");
-		$("#circulo").append(particula);
+		var particula = new Particula(20, 245);
+		plano.addParticula(particula);
 		
-		var particulaInicial = new Particula(particula, 20, 245);
-		plano.addParticula(particulaInicial);
-		
-		particulaInicial.setPosicaoAnimate(150, 250, function() {});
+		particula.setPosicaoAnimate(245, 245, function() {
+			
+		});
 	}
 	
 	lancar();
