@@ -45,13 +45,16 @@ class Particula {
 	getVelocidade(x: number, y: number): number {
 		var vLuz = this.plano.getVLuz();
 		var vEter = this.plano.getVEter();
-		var inclinacao = this.plano.getInclinacao();
+		var inclinacao = (this.plano.getInclinacao())%360;
 		if(VEter == 0){
 			return calcVelocidade(0, x, y);
-		}else if (inclinacao == ) {
-			
+		}else if (inclinacao == 0 || inclinacao == 180) {
+			return calcVelocidade(3, x, y);			
 		}
-		return 21;
+		else if (inclinacao == 90 || inclinacao == 270) {
+			return calcVelocidade(1, x, y);			
+		}
+		return calcVelocidade(2, x, y);	
 	}
 	//
 	//método auxiliar de getVelocidade para calcular a velocidade
