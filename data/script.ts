@@ -92,7 +92,7 @@ class Particula {
 				return;
 			}
 			
-			setTimeout(function() {mover(particula)}, this.getVelocidade());
+			setTimeout(function() {mover(particula)}, particula.getVelocidade());
 		}
 		mover(this);
 	}
@@ -109,6 +109,7 @@ class Plano {
 	particulas: Array<Particula>;
 	vLuz = 46; // px/ms
 	eter = false;
+	vEter = 4.6;
 	comprimento: number; //px
 	inclinacao: number; //graus
 	
