@@ -1,44 +1,29 @@
 var Util = (function () {
     function Util() {
     }
-    //
-    // Indica se o Número é negativo, nulo ou positivo
-    // @param x O número a ser verificado.
-    // @return
-    //
     Util.prototype.sinal = function (x) {
         return x < 0 ? -1 : x == 0 ? 0 : 1;
     };
     return Util;
 })();
 
-//
-//  Representação de uma particula
-//
 var Particula = (function () {
     function Particula(x, y) {
         this.particula = $("<div class='particula' />");
         this.setPosicao(x, y);
     }
-    //
-    // Definir a cor da partícula
-    // @param color Cor hexadecimal.
-    //
     Particula.prototype.setColor = function (color) {
         this.particula.css("background", color);
     };
 
-    //
-    // Pega a posição atual da Particula
-    // @return {x:,y:}
-    //
     Particula.prototype.getPosicao = function () {
         return { "x": this.x, "y": this.y };
     };
 
-    //
-    // @return Retorna o tempo(ms) que a particula gasta para percorrer 1 px
-    //
+    Particula.prototype.tempoAte = function (x, y) {
+        return this.getVelocidade(x, y) * this.plano.getComprimento();
+    };
+
     Particula.prototype.getVelocidade = function (x, y) {
         var vLuz = this.plano.getVLuz();
         var vEter = this.plano.getVEter();
@@ -54,9 +39,6 @@ var Particula = (function () {
         return this.calcVelocidade(2, x, y);
     };
 
-    //
-    //método auxiliar de getVelocidade para calcular a velocidade
-    //
     Particula.prototype.calcVelocidade = function (n, x, y) {
         if (n == 0) {
             return this.equacao(0);
@@ -79,9 +61,6 @@ var Particula = (function () {
         return ((this.plano.getComprimento() / this.plano.getVLuz()) * (1 + (10 * ((this.plano.getVEter() * this.plano.getVEter() / this.plano.getVLuz() * this.plano.getVLuz()) * n))) * 1000) / this.plano.getComprimento();
     };
 
-    //
-    // Move a particula para a posição. Não há trasição.
-    //
     Particula.prototype.setPosicao = function (x, y) {
         this.x = x;
         this.y = y;
@@ -90,12 +69,6 @@ var Particula = (function () {
         this.particula.css("top", y);
     };
 
-    //
-    // Move a particula para a posição com um movimento linear uniforme, com base nas condições do plano.
-    // @param x, posição X no plano, em pixel;
-    // @param y, posição Y no plano, em pixel;
-    // @param callback, A função a ser chamada após o término da animação
-    //
     Particula.prototype.setPosicaoAnimate = function (x, y, callback) {
         var sinal = new Util().sinal;
         var xFinal = x;
@@ -146,18 +119,15 @@ var Particula = (function () {
     return Particula;
 })();
 
-//
-// O Plano contendo as particulas
-//
 var Plano = (function () {
-    //
-    // @param id, o id do elemento que representara o plano
     function Plano(id) {
         this.vLuz = 46;
         this.eterAtivado = false;
         this.vEter = 4.6;
         this.id = id;
         this.particulas = new Array();
+        this.inclinacao = 0;
+        this.comprimento = 500;
     }
     Plano.prototype.setComprimento = function (comprimento) {
         this.comprimento = comprimento;
@@ -195,9 +165,8 @@ var Plano = (function () {
     Plano.prototype.setInclinacao = function (g) {
         this.inclinacao = g;
         var circulo = $("#" + this.id);
-        console.log(circulo);
-        circulo.css("-webkit-transform", "rotate(" + this.inclinacao + "deg)");
-        circulo.attr("angle", this.inclinacao);
+        circulo.css("-webkit-transform", "rotate(" + g + "deg)");
+        circulo.attr("angle", g);
     };
 
     Plano.prototype.addParticula = function (particula) {
@@ -233,20 +202,20 @@ $(document).ready(function () {
 
             particula.destruir();
 
-            particulaVai.setPosicaoAnimate(480, 245, function () {
+            particulaVai.setPosicaoAnimate(470, 245, function () {
                 particulaVai.setPosicaoAnimate(245, 245, function () {
-                    if (particulaVai.getPosicao() == particulaSobe.getPosicao()) {
+                    if (particulaVai.tempoAte(245, 245) == particulaSobe.tempoAte(245, 245)) {
                         particulaVai.destruir();
                         particulaSobe.destruir();
 
                         var particulaResultante = new Particula(245, 245);
-                        particula.setColor("yellow");
+                        particulaResultante.setColor("yellow");
                         plano.addParticula(particulaResultante);
 
-                        particulaResultante.setPosicaoAnimate(245, 480, function () {
+                        particulaResultante.setPosicaoAnimate(245, 470, function () {
                         });
                     } else {
-                        particulaVai.setPosicaoAnimate(245, 480, function () {
+                        particulaVai.setPosicaoAnimate(245, 470, function () {
                         });
                     }
                 });
@@ -254,8 +223,8 @@ $(document).ready(function () {
 
             particulaSobe.setPosicaoAnimate(245, 20, function () {
                 particulaSobe.setPosicaoAnimate(245, 245, function () {
-                    if (particulaVai.getPosicao() != particulaSobe.getPosicao()) {
-                        particulaSobe.setPosicaoAnimate(245, 480, function () {
+                    if (particulaVai.tempoAte(245, 245) != particulaSobe.tempoAte(245, 245)) {
+                        particulaSobe.setPosicaoAnimate(245, 470, function () {
                         });
                     }
                 });

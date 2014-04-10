@@ -41,6 +41,13 @@ class Particula {
 	}
 	
 	//
+	// @return O tempo gasto pela particula até o ponto especificado
+	//
+	tempoAte(x: number, y: number): number {
+		return this.getVelocidade(x, y) * this.plano.getComprimento();
+	}
+	
+	//
 	// @return Retorna o tempo(ms) que a particula gasta para percorrer 1 px
 	//
 	getVelocidade(x: number, y: number): number {
@@ -164,6 +171,8 @@ class Plano {
 	constructor(id: string) {
 		this.id = id;
 		this.particulas = new Array();
+		this.inclinacao = 0;
+		this.comprimento = 500;
 	}
 	
 	setComprimento(comprimento: number) {
@@ -201,9 +210,8 @@ class Plano {
 	setInclinacao(g: number): void {
 		this.inclinacao = g;
 		var circulo = $("#"+this.id);
-		console.log(circulo);
-		circulo.css("-webkit-transform", "rotate("+this.inclinacao+"deg)");
-		circulo.attr("angle", this.inclinacao);
+		circulo.css("-webkit-transform", "rotate("+g+"deg)");
+		circulo.attr("angle", g);
 	}
 	
 	addParticula(particula: Particula): void {
@@ -222,7 +230,7 @@ $(document).ready(function() {
 	var plano = new Plano("circulo");
 	
 	$("#teste").click(function() {
-		plano.setInclinacao(plano.getInclinacaoLiteral()+ 45);
+		plano.setInclinacao(plano.getInclinacaoLiteral() + 45);
 	});
 	
 	var lancar = function() {
@@ -239,27 +247,27 @@ $(document).ready(function() {
 			
 			particula.destruir();
 			
-			particulaVai.setPosicaoAnimate(480, 245, function() {
+			particulaVai.setPosicaoAnimate(470, 245, function() {
 				particulaVai.setPosicaoAnimate(245, 245, function(){
-                	if (particulaVai.getPosicao() == particulaSobe.getPosicao()) {
+                	if (particulaVai.tempoAte(245, 245) == particulaSobe.tempoAte(245, 245)) {
                 		particulaVai.destruir();
                 		particulaSobe.destruir();
                 		
                 		var particulaResultante = new Particula(245,245);
-						particula.setColor("yellow");
+						particulaResultante.setColor("yellow");
 						plano.addParticula(particulaResultante);
 						
-						particulaResultante.setPosicaoAnimate(245, 480, function(){});
+						particulaResultante.setPosicaoAnimate(245, 470, function(){});
                 	} else {
-						particulaVai.setPosicaoAnimate(245, 480, function(){});
+						particulaVai.setPosicaoAnimate(245, 470, function(){});
 					}
 				});
 			});
 			
 			particulaSobe.setPosicaoAnimate(245, 20, function() {
 				particulaSobe.setPosicaoAnimate(245, 245, function(){
-					if (particulaVai.getPosicao() != particulaSobe.getPosicao()) {
-						particulaSobe.setPosicaoAnimate(245, 480, function(){});
+					if (particulaVai.tempoAte(245, 245) != particulaSobe.tempoAte(245, 245)) {
+						particulaSobe.setPosicaoAnimate(245, 470, function(){});
 					}
 				});
 			});
