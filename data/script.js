@@ -142,7 +142,7 @@ var Plano = (function () {
             return 4.8;
         return 0;
     };
-    Plano.prototype.setEterAtivado = function (b) {
+    Plano.prototype.changeEter = function (b) {
         this.eterAtivado = b;
     };
 
@@ -183,9 +183,32 @@ var Plano = (function () {
 
 $(document).ready(function () {
     var plano = new Plano("circulo");
+    var eter = false;
 
-    $("#teste").click(function () {
+    $("#rodar").click(function () {
         plano.setInclinacao(plano.getInclinacaoLiteral() + 45);
+    });
+
+    $("#eter").click(function () {
+        if (plano.getVEter() == 0) {
+            $(this).css("background", "red");
+            eter = (true);
+        } else {
+            $(this).css("background", "lightskyblue");
+            eter = (false);
+        }
+    });
+
+    $("#iniciar").click(function () {
+        for (var i = 0; i < plano.getParticulas().length; i++) {
+            try  {
+                plano.getParticulas()[i].destruir();
+                delete plano.getParticulas()[i];
+            } catch (e) {
+            }
+        }
+        plano.changeEter(eter);
+        lancar();
     });
 
     var lancar = function () {

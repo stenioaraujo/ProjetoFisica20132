@@ -187,7 +187,7 @@ class Plano {
 		if (this.eterAtivado) return 4.8;
 		return 0;
 	}
-	setEterAtivado(b: boolean): void {
+	changeEter(b: boolean): void {
 		this.eterAtivado = b;
 	}
 	
@@ -228,9 +228,32 @@ class Plano {
 
 $(document).ready(function() {
 	var plano = new Plano("circulo");
+	var eter = false;
 	
-	$("#teste").click(function() {
+	$("#rodar").click(function() {
 		plano.setInclinacao(plano.getInclinacaoLiteral() + 45);
+	});
+	
+	$("#eter").click(function(){
+		if(plano.getVEter() == 0) {
+			$(this).css("background", "red");
+			eter = (true);
+		} else {
+			$(this).css("background", "lightskyblue");
+			eter = (false);
+		}
+	});
+	
+	$("#iniciar").click(function(){
+		for (var i = 0; i < plano.getParticulas().length; i++) {
+			try {
+				plano.getParticulas()[i].destruir();
+				delete plano.getParticulas()[i];
+			} catch(e) {
+			}
+		}
+		plano.changeEter(eter);
+		lancar();
 	});
 	
 	var lancar = function() {

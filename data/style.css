@@ -65,8 +65,13 @@ body {
 	-webkit-transform: rotate(0deg);
 }
 
-#teste {
-	position: fixed;
+#botoes {
+	position: relative;
+}
+
+.botao {
+	float: left;
+	display: block;
 	background: lightskyblue;
 	padding: 5PX;
 	padding-left: 15PX;
@@ -77,7 +82,7 @@ body {
 	font-weight: bold;
 }
 
-#teste:hover {
+.botao:hover {
 	cursor: pointer;
 	background: rgba(135, 206, 250, 0.61);
 }
