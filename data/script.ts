@@ -40,14 +40,46 @@ class Particula {
 	}
 	
 	//
-	// @return Retorna o tempo que a particula gasta para percorrer 1 px
+	// @return Retorna o tempo(ms) que a particula gasta para percorrer 1 px
 	//
-	getVelocidade(): number {
+	getVelocidade(x: number, y: number): number {
 		var vLuz = this.plano.getVLuz();
 		var vEter = this.plano.getVEter();
 		var inclinacao = this.plano.getInclinacao();
-		
+		if(VEter == 0){
+			return calcVelocidade(0, x, y);
+		}else if (inclinacao == ) {
+			
+		}
 		return 21;
+	}
+	//
+	//método auxiliar de getVelocidade para calcular a velocidade
+	//
+	calcVelocidade(n: number, x: number, y: number): number{
+		if (n == 0) {
+			return equacao(0);
+		}else if (n == 1) {
+			return equacao(1);
+		}else if (n == 2) {
+			if (this.particula.x < x) {
+				return equacao(2);
+			}
+			return equacao(-2);			
+		}else{
+			if (this.particula.x < x) {
+				return equacao(3);
+			}
+			return equacao(-3);				
+		}
+		
+		
+		
+		
+	}
+	
+	equacao(n: number): number{
+		return (((this.plano.getComprimento() / this.plano.getVLuz())*(1+(10*((this.plano.getVEter()*this.plano.getVEter() / this.plano.getVLuz()*this.plano.getVLuz())*n)))*1000)/this.plano.getComprimento();
 	}
 	
 	//
@@ -92,7 +124,7 @@ class Particula {
 				return;
 			}
 			
-			setTimeout(function() {mover(particula)}, particula.getVelocidade());
+			setTimeout(function() {mover(particula)}, particula.getVelocidade(xFinal,yFinal));
 		}
 		mover(this);
 	}
