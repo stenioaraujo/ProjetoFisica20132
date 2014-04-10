@@ -190,12 +190,12 @@ $(document).ready(function () {
     });
 
     $("#eter").click(function () {
-        if (plano.getVEter() == 0) {
-            $(this).css("background", "red");
-            eter = (true);
-        } else {
+        if (eter) {
             $(this).css("background", "lightskyblue");
             eter = (false);
+        } else {
+            $(this).css("background", "red");
+            eter = (true);
         }
     });
 
