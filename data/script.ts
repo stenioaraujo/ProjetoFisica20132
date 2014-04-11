@@ -185,7 +185,7 @@ class Plano {
 		this.id = id;
 		this.particulas = new Array();
 		this.inclinacao = 0;
-		this.comprimento = 230;
+		this.comprimento = 225;
 	}
 	
 	setComprimento(comprimento: number) {
@@ -197,7 +197,7 @@ class Plano {
 	}
 	
 	getVEter(): number {
-		if (this.eterAtivado) return 4.8;
+		if (this.eterAtivado) return 4.6;
 		return 0;
 	}
 	changeEter(b: boolean): void {
