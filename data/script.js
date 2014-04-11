@@ -45,7 +45,8 @@ var Particula = (function () {
         $("#grau").html(incli);
         $("#comprimento").html(this.plano.getComprimento());
         
-        return velocidades[this.anguloAte(x, y)];
+        if (this.eterAtivado) return velocidades[this.anguloAte(x, y)];
+        return 21;
     };
     
     Particula.prototype.anguloAte = function(x, y) {
