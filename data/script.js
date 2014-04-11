@@ -26,26 +26,26 @@ var Particula = (function () {
     };
 
     Particula.prototype.getVelocidade = function (x, y) {
-        var vLuz = this.plano.getVLuz();
-        var vEter = this.plano.getVEter();
-        var inclinacao = this.plano.getInclinacao();
+        var luz = this.plano.getVLuz();
+        var eter = this.plano.getVEter();
+        var incli = this.plano.getInclinacao();
         var retorno;
 
-        if (vEter == 0) {
+        if (eter == 0) {
             retorno = this.calcVelocidade(0, x, y);
-        } else if (inclinacao == 0 || inclinacao == 180) {
+        } else if (incli == 0 || incli == 180) {
             retorno = this.calcVelocidade(3, x, y);
-        } else if (inclinacao == 90 || inclinacao == 270) {
+        } else if (incli == 90 || incli == 270) {
             retorno = this.calcVelocidade(1, x, y);
         } else {
             retorno = this.calcVelocidade(2, x, y);
         }
 
         
-        $("#vLuz").html(vLuz);
-        $("#vEter").html(vEter);
+        $("#vLuz").html(luz);
+        $("#vEter").html(eter);
         $("#velocidade").html(retorno);
-        $("#grau").html(inclinacao);
+        $("#grau").html(incli);
         $("#comprimento").html(this.plano.getComprimento());
 
         return retorno;
