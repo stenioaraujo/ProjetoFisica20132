@@ -55,7 +55,7 @@ var Particula = (function () {
     		var dY = y - this.y;
     		return ((sinal(dY) < 0 ? 180: 0) + 90 + this.plano.getInclinacao()) % 360;
     	} else if (y - this.y == 0) {
-    		var dx = x - this.x;
+    		var dX = x - this.x;
     		return ((sinal(dX) < 0 ? 180: 0) + this.plano.getInclinacao()) % 360;
     	}
     }
