@@ -219,7 +219,8 @@ $(document).ready(function () {
         plano.addParticula(particulaVai);
         plano.addParticula(particulaSobe);
         plano.addParticula(particulaResultante);
-
+	$("#receptor div").css("display", "none");
+	
         lancar();
         rodando = true;
     };
