@@ -91,7 +91,7 @@ body {
 	position: absolute;
 	background: #000;
 	border-radius: 50%;
-	display: block;
+	display: none;
 	top: 0px;
 	left: 0px;
 	width: 10px;

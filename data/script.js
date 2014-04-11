@@ -11,6 +11,7 @@ var Particula = (function () {
     function Particula(x, y) {
         this.particula = $("<div class='particula' />");
         this.setPosicao(x, y);
+        this.destruida = false;
     }
     Particula.prototype.setColor = function (color) {
         this.particula.css("background", color);
@@ -81,6 +82,9 @@ var Particula = (function () {
         };
 
         var mover = function (particula) {
+            if (particula.destruida)
+                return;
+
             var dX = xFinal - particula.x;
             var dY = yFinal - particula.y;
 
@@ -114,7 +118,16 @@ var Particula = (function () {
 
     Particula.prototype.destruir = function () {
         this.particula.remove();
-        delete this;
+        this.destruida = true;
+        this.setVisivel(false);
+    };
+
+    Particula.prototype.setVisivel = function (visivel) {
+        if (visivel) {
+            this.particula.css("display", "block");
+        } else {
+            this.particula.css("display", "none");
+        }
     };
     return Particula;
 })();
@@ -127,7 +140,7 @@ var Plano = (function () {
         this.id = id;
         this.particulas = new Array();
         this.inclinacao = 0;
-        this.comprimento = 500;
+        this.comprimento = 230;
     }
     Plano.prototype.setComprimento = function (comprimento) {
         this.comprimento = comprimento;
@@ -182,8 +195,40 @@ var Plano = (function () {
 })();
 
 $(document).ready(function () {
-    var plano = new Plano("circulo");
+    var plano;
     var eter = false;
+    var rodando = false;
+    var particula;
+    var particulaVai;
+    var particulaSobe;
+    var particulaResultante;
+
+    var iniciar = function () {
+        plano = new Plano("circulo");
+        plano.changeEter(eter);
+        particula = new Particula(20, 245);
+        particulaVai = new Particula(245, 245);
+        particulaSobe = new Particula(245, 245);
+        particulaResultante = new Particula(245, 245);
+        particulaVai.setColor("red");
+        particulaSobe.setColor("purple");
+        particulaResultante.setColor("yellow");
+        plano.addParticula(particula);
+        plano.addParticula(particulaVai);
+        plano.addParticula(particulaSobe);
+        plano.addParticula(particulaResultante);
+
+        lancar();
+        rodando = true;
+    };
+
+    var parar = function () {
+        if (rodando) {
+            for (var i = 0; i < plano.getParticulas().length; i++) {
+                plano.getParticulas()[i].destruir();
+            }
+        }
+    };
 
     $("#rodar").click(function () {
         plano.setInclinacao(plano.getInclinacaoLiteral() + 45);
@@ -199,41 +244,28 @@ $(document).ready(function () {
         }
     });
 
+    $("#parar").click(function () {
+        parar();
+    });
+
     $("#iniciar").click(function () {
-        for (var i = 0; i < plano.getParticulas().length; i++) {
-            try  {
-                plano.getParticulas()[i].destruir();
-                delete plano.getParticulas()[i];
-            } catch (e) {
-            }
-        }
-        plano.changeEter(eter);
-        lancar();
+        parar();
+        iniciar();
     });
 
     var lancar = function () {
-        var particula = new Particula(20, 245);
-        plano.addParticula(particula);
-
+        particula.setVisivel(true);
         particula.setPosicaoAnimate(245, 245, function () {
-            var particulaVai = new Particula(245, 245);
-            var particulaSobe = new Particula(245, 245);
-            particulaVai.setColor("red");
-            particulaSobe.setColor("purple");
-            plano.addParticula(particulaVai);
-            plano.addParticula(particulaSobe);
-
+            particulaVai.setVisivel(true);
+            particulaSobe.setVisivel(true);
             particula.destruir();
 
             particulaVai.setPosicaoAnimate(470, 245, function () {
                 particulaVai.setPosicaoAnimate(245, 245, function () {
                     if (particulaVai.tempoAte(245, 245) == particulaSobe.tempoAte(245, 245)) {
+                        particulaResultante.setVisivel(true);
                         particulaVai.destruir();
                         particulaSobe.destruir();
-
-                        var particulaResultante = new Particula(245, 245);
-                        particulaResultante.setColor("yellow");
-                        plano.addParticula(particulaResultante);
 
                         particulaResultante.setPosicaoAnimate(245, 470, function () {
                         });
@@ -254,6 +286,4 @@ $(document).ready(function () {
             });
         });
     };
-
-    lancar();
 });

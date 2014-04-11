@@ -18,10 +18,12 @@ class Particula {
 	y: number;
 	particula;
 	plano: Plano;
+	destruida: boolean;
 	
 	constructor(x: number, y: number) {
 		this.particula = $("<div class='particula' />");
 		this.setPosicao(x, y);
+		this.destruida = false;
 	}
 	
 	//
@@ -54,7 +56,7 @@ class Particula {
 		var vLuz = this.plano.getVLuz();
 		var vEter = this.plano.getVEter();
 		var inclinacao = this.plano.getInclinacao();
-		
+				
 		if(vEter == 0){
 			return this.calcVelocidade(0, x, y);
 		}else if (inclinacao == 0 || inclinacao == 180) {
@@ -120,6 +122,8 @@ class Particula {
 		}
 				
 		var mover = function(particula: Particula) {
+			if (particula.destruida) return;
+			
 			var dX = xFinal - particula.x;
 			var dY = yFinal - particula.y;
 			
@@ -150,7 +154,16 @@ class Particula {
 	
 	destruir(): void {
 		this.particula.remove();
-		delete this;
+		this.destruida = true;
+		this.setVisivel(false);
+	}
+	
+	setVisivel(visivel: boolean): void {
+		if (visivel) {
+			this.particula.css("display", "block");
+		} else {
+			this.particula.css("display", "none");
+		}
 	}
 }
 
@@ -172,7 +185,7 @@ class Plano {
 		this.id = id;
 		this.particulas = new Array();
 		this.inclinacao = 0;
-		this.comprimento = 500;
+		this.comprimento = 230;
 	}
 	
 	setComprimento(comprimento: number) {
@@ -227,8 +240,40 @@ class Plano {
 
 
 $(document).ready(function() {
-	var plano = new Plano("circulo");
+	var plano;
 	var eter = false;
+	var rodando = false;
+	var particula;
+	var particulaVai;
+	var particulaSobe;
+	var particulaResultante;
+	
+	var iniciar = function() {
+		plano = new Plano("circulo");
+		plano.changeEter(eter);
+		particula = new Particula(20, 245);
+		particulaVai = new Particula(245,245);
+		particulaSobe = new Particula(245, 245);
+		particulaResultante = new Particula(245,245);
+		particulaVai.setColor("red");
+		particulaSobe.setColor("purple");
+		particulaResultante.setColor("yellow");
+		plano.addParticula(particula);
+		plano.addParticula(particulaVai);
+		plano.addParticula(particulaSobe);
+		plano.addParticula(particulaResultante);
+		
+		lancar();
+		rodando = true;
+	}
+	
+	var parar = function() {
+		if (rodando) {
+			for (var i = 0; i < plano.getParticulas().length; i++) {
+				plano.getParticulas()[i].destruir();
+			}
+		}
+	}
 	
 	$("#rodar").click(function() {
 		plano.setInclinacao(plano.getInclinacaoLiteral() + 45);
@@ -244,42 +289,29 @@ $(document).ready(function() {
 		}
 	});
 	
+	$("#parar").click(function() {
+		parar();
+	});
+	
 	$("#iniciar").click(function(){
-		for (var i = 0; i < plano.getParticulas().length; i++) {
-			try {
-				plano.getParticulas()[i].destruir();
-				delete plano.getParticulas()[i];
-			} catch(e) {
-			}
-		}
-		plano.changeEter(eter);
-		lancar();
+		parar();
+		iniciar();
 	});
 	
 	var lancar = function() {
-		var particula = new Particula(20, 245);
-		plano.addParticula(particula);
-		
-		particula.setPosicaoAnimate(245, 245, function() {
-			var particulaVai = new Particula(245,245);
-			var particulaSobe = new Particula(245, 245);
-			particulaVai.setColor("red");
-			particulaSobe.setColor("purple");
-			plano.addParticula(particulaVai);
-			plano.addParticula(particulaSobe);
-			
+		particula.setVisivel(true);
+		particula.setPosicaoAnimate(245, 245, function() {			
+			particulaVai.setVisivel(true);
+			particulaSobe.setVisivel(true);
 			particula.destruir();
 			
 			particulaVai.setPosicaoAnimate(470, 245, function() {
 				particulaVai.setPosicaoAnimate(245, 245, function(){
                 	if (particulaVai.tempoAte(245, 245) == particulaSobe.tempoAte(245, 245)) {
+                		particulaResultante.setVisivel(true);
                 		particulaVai.destruir();
                 		particulaSobe.destruir();
                 		
-                		var particulaResultante = new Particula(245,245);
-						particulaResultante.setColor("yellow");
-						plano.addParticula(particulaResultante);
-						
 						particulaResultante.setPosicaoAnimate(245, 470, function(){});
                 	} else {
 						particulaVai.setPosicaoAnimate(245, 470, function(){});
@@ -296,6 +328,4 @@ $(document).ready(function() {
 			});
 		});
 	}
-	
-	lancar();
 });
