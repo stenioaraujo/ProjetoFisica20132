@@ -29,15 +29,23 @@ var Particula = (function () {
         var vLuz = this.plano.getVLuz();
         var vEter = this.plano.getVEter();
         var inclinacao = this.plano.getInclinacao();
+        var retorno;
 
         if (vEter == 0) {
-            return this.calcVelocidade(0, x, y);
+            retorno = this.calcVelocidade(0, x, y);
         } else if (inclinacao == 0 || inclinacao == 180) {
-            return this.calcVelocidade(3, x, y);
+            retorno = this.calcVelocidade(3, x, y);
         } else if (inclinacao == 90 || inclinacao == 270) {
-            return this.calcVelocidade(1, x, y);
+            retorno = this.calcVelocidade(1, x, y);
         }
-        return this.calcVelocidade(2, x, y);
+
+        retorno = this.calcVelocidade(2, x, y);
+
+        $("#velocidade").html(retorno);
+        $("#grau").html(inclinacao);
+        $("#comprimento").html(this.plano.getComprimento());
+
+        return retorno;
     };
 
     Particula.prototype.calcVelocidade = function (n, x, y) {
@@ -139,7 +147,7 @@ var Plano = (function () {
         this.vEter = 4.6;
         this.id = id;
         this.particulas = new Array();
-        this.inclinacao = 0;
+        this.inclinacao = parseInt($("#" + id).attr("angle"));
         this.comprimento = 230;
     }
     Plano.prototype.setComprimento = function (comprimento) {
@@ -194,9 +202,10 @@ var Plano = (function () {
     return Plano;
 })();
 
+var Eter = false;
+
 $(document).ready(function () {
     var plano;
-    var eter = false;
     var rodando = false;
     var particula;
     var particulaVai;
@@ -205,7 +214,7 @@ $(document).ready(function () {
 
     var iniciar = function () {
         plano = new Plano("circulo");
-        plano.changeEter(eter);
+        plano.changeEter(Eter);
         particula = new Particula(20, 245);
         particulaVai = new Particula(245, 245);
         particulaSobe = new Particula(245, 245);
@@ -235,12 +244,12 @@ $(document).ready(function () {
     });
 
     $("#eter").click(function () {
-        if (eter) {
+        if (Eter) {
             $(this).css("background", "lightskyblue");
-            eter = (false);
+            Eter = false;
         } else {
             $(this).css("background", "red");
-            eter = (true);
+            Eter = true;
         }
     });
 
