@@ -256,7 +256,12 @@ $(document).ready(function () {
         parar();
         iniciar();
     });
-
+    
+    var fim = function(igual) {
+	$("#receptor div").css("display", "block");
+	$("#background div").css("background", igual?"yellow":$("#background div").css("background"));
+    };
+    
     var lancar = function () {
         particula.setVisivel(true);
         particula.setPosicaoAnimate(245, 245, function () {
@@ -272,10 +277,12 @@ $(document).ready(function () {
                         particulaVai.destruir();
                         particulaSobe.destruir();
 
-                        particulaResultante.setPosicaoAnimate(245, 470, function () {
+                        particulaResultante.setPosicaoAnimate(245, 480, function () {
+                        	fim(true)
                         });
                     } else {
-                        particulaVai.setPosicaoAnimate(245, 470, function () {
+                        particulaVai.setPosicaoAnimate(245, 480, function () {
+                        	fim(false)
                         });
                     }
                 });
@@ -285,7 +292,8 @@ $(document).ready(function () {
                 $("#velocidade").html("(bCima: " + particulaSobe.getVelocidade(245, 245) + ", bDireita: " + particulaVai.getVelocidade(245, 245));
         	particulaSobe.setPosicaoAnimate(245, 245, function () {
                     if ((new Util()).distancia(particulaVai, particulaSobe) >= 3) {
-                        particulaSobe.setPosicaoAnimate(245, 470, function () {
+                        particulaSobe.setPosicaoAnimate(245, 480, function () {
+                        	fim(false)
                         });
                     }
                 });
