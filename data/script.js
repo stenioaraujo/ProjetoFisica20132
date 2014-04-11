@@ -216,7 +216,7 @@ $(document).ready(function () {
 
     var iniciar = function () {
         plano = new Plano("circulo");
-        plano.changeEter(Eter);
+        plano.changeEter(Eter?true : false);
         particula = new Particula(20, 245);
         particulaVai = new Particula(245, 245);
         particulaSobe = new Particula(245, 245);
@@ -248,10 +248,12 @@ $(document).ready(function () {
     $("#eter").click(function () {
         if (Eter) {
             $(this).css("background", "lightskyblue");
+            $("#fluxoEter").css("display", "none");
+            clearInterval(Eter);
             Eter = false;
         } else {
             $(this).css("background", "red");
-            Eter = true;
+            Eter = movimentarEter();
         }
     });
 
@@ -298,6 +300,34 @@ $(document).ready(function () {
             $("#velocidade").html("(bCima: " + particulaSobe.getVelocidade(245, 20) + ", bDireita: " + particulaVai.getVelocidade(470, 245));
         });
     };
+    
+    var criarFluxoEter = function() {
+    	for (var i = 0; i < 20; i++) {
+    		var linha = $("<div class='linhaFluxo'></div>");
+    		
+    		for (var j = 0; j < 50; j++) {
+    			var fluxo = $("<div class='fluxo'></div>");
+    			linha.append(fluxo);
+    		}
+    		
+    		$("#fluxoEter").append(linha);
+    	}
+    };
+    
+    var movimentarEter = function() {
+    	var movimento = 0;
+		$(".linhaFluxo").css("margin-left", movimento);
+    	$("#fluxoEter").css("display", "block");
+    	var fluxoEter = setInterval(function(){
+    		if (movimento < - 50) movimento = 0;
+    		movimento -= 1;
+    		$(".linhaFluxo").css("margin-left", movimento);
+    	}, 50);
+    	
+    	return fluxoEter
+    }
+    
+    criarFluxoEter();
     iniciar();
     parar();
 });
