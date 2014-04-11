@@ -150,7 +150,7 @@ var Plano = (function () {
         this.id = id;
         this.particulas = new Array();
         this.inclinacao = parseInt($("#" + id).attr("angle"));
-        this.comprimento = 230;
+        this.comprimento = 225;
     }
     Plano.prototype.setComprimento = function (comprimento) {
         this.comprimento = comprimento;
@@ -162,7 +162,7 @@ var Plano = (function () {
 
     Plano.prototype.getVEter = function () {
         if (this.eterAtivado)
-            return 4.8;
+            return vEter;
         return 0;
     };
     Plano.prototype.changeEter = function (b) {
