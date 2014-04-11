@@ -248,7 +248,6 @@ $(document).ready(function () {
             $(this).css("background", "red");
             Eter = movimentarEter();
         }
-    	parar();
     });
 
     $("#parar").click(function () {
