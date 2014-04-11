@@ -61,7 +61,7 @@ var Particula = (function () {
             }
             return this.equacao(-2);
         } else {
-            if (Util.sinal(this.x - x) > 0 && ((this.plano.getInclinacao() == 45) || (this.plano.getInclinacao() == 315)))) {
+            if (Util.sinal(this.x - x) > 0 && ((this.plano.getInclinacao() == 45) || (this.plano.getInclinacao() == 315))) {
                 return this.equacao(3);
             }
             return this.equacao(-3);
