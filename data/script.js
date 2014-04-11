@@ -217,7 +217,7 @@ $(document).ready(function () {
         particulaResultante = new Particula(245, 245);
         particulaVai.setColor("red");
         particulaSobe.setColor("purple");
-        particulaResultante.setColor("black");
+        particulaResultante.setColor("yellow");
         plano.addParticula(particula);
         plano.addParticula(particulaVai);
         plano.addParticula(particulaSobe);
@@ -273,8 +273,8 @@ $(document).ready(function () {
 	});
 	
     var fim = function(igual) {
-	$("#receptor div").css("background", (igual?"yellow":"white"));
-	$("#receptor div").css("display", "block");
+		$("#receptor div").css("background", (igual?"yellow":"white"));
+		$("#receptor div").css("display", "block");
     };
     
     var lancar = function () {
