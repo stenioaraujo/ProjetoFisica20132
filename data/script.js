@@ -70,7 +70,7 @@ var Particula = (function () {
     };
 
     Particula.prototype.equacao = function (n) {
-        return ((this.plano.getComprimento() / this.plano.getVLuz()) * (1 + (10 * ((this.plano.getVEter() * this.plano.getVEter() / this.plano.getVLuz() * this.plano.getVLuz()) * n))) * 1000) / this.plano.getComprimento();
+        return (1 / this.plano.getVLuz())*(1+(10*(((this.plano.getVEter()*this.plano.getVEter()) / (this.plano.getVLuz()*this.plano.getVLuz()))*n)))*1000);
     };
 
     Particula.prototype.setPosicao = function (x, y) {
