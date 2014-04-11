@@ -163,7 +163,7 @@ var Plano = (function () {
 
     Plano.prototype.getVEter = function () {
         if (this.eterAtivado)
-            return vEter;
+            return this.vEter;
         return 0;
     };
     Plano.prototype.changeEter = function (b) {
