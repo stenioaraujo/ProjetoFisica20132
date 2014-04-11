@@ -1,28 +1,30 @@
 <html lang="pt-br">
 	<head>
+		<meta charset="utf-8" />
 		<script src="data/jquery-1.7.js"></script>
 		<script type="text/javascript" src="data/script.js"></script>
-		<link type="text/css" rel="stylesheet" href="data/style.css" />	
+		<link type="text/css" rel="stylesheet" href="data/style.css" />
 	</head>
 	<body>
 		<div id="botoes">
 			<div id="rodar" class="botao">
-				rodar
+				0º
 			</div>
 			<div id="eter" class="botao">
-				Ativar Eter
+				Activate Ether
 			</div>
 			<div id="parar" class="botao">
-				Parar
+				Stop
 			</div>
 			<div id="iniciar" class="botao">
-				Iniciar
+				Start
 			</div>
-			<div id="hep" class="botao">
+			<div id="ajuda" class="botao">
 				Help
 			</div>
 		</div>
 		<div id="container">
+		<center><h1 style="background: #fff; text-align:center;width: 50%;box-shadow: 0px 0px 50px #000;">INTERFERÔMETRO(Michelson-Morley)</h1></center>
 			<div id="fluxoEter"></div>
 			<div id="circulo" angle="0">
 				<div id="lancador" class="espelho"></div>
@@ -31,6 +33,29 @@
 				<div id="espelho3" class="espelho"></div>
 				<div id="espelhoCentro" class="espelho"></div>
 			</div>
+		</div>
+		<div id="ajudaPopUpMsg">
+			<h1 text-align="center">Experimento de Michelson – Morley </h1>
+			<p>Michelson e Morley Estavam em busca de provar a que a luz, sendo uma onda, se propagava</ br>
+			através de um meio. E para provar toda a sua teoria criou-se um equipamento chamado INTERFERÔMETRO.</ br>
+			Através de toda teoria, esse software busca simular o inferômetro.
+			</p>
+			</br>
+			<center><h3>BOTÕES</h3></center>
+			<ul>
+			<li><b>[C°]</b> - Mostra o Grau de rotação do INFERÔMETRO;</li>
+			<li><b>[Activate Ether]</b> - Ativa/Desativa o Ether sobre o experimento;</li>
+			<li><b>[STOP]</b> - Paraliza a operação sendo realizada.</li>
+			<li><b>[STAR]</b> - Inicializar o experimento a qualquer instante.</li>
+			</ul>
+			</br>
+			</br>
+			</br>
+			<p>OBS: Para mais informações acesse o manual de usuário do software.</p>
+			
+			<div class="clear"></div>
+		</div>
+		<div id="ajudaPopUp">
 		</div>
 	</body>
 </html>

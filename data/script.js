@@ -179,6 +179,9 @@ var Plano = (function () {
     Plano.prototype.setInclinacao = function (g) {
         this.inclinacao = g;
         var circulo = $("#" + this.id);
+		
+		circulo.css("transform", "rotate(" + g + "deg)");
+		circulo.css("-ms-transform", "rotate(" + g + "deg)");
         circulo.css("-webkit-transform", "rotate(" + g + "deg)");
         circulo.attr("angle", g);
     };
@@ -214,7 +217,7 @@ $(document).ready(function () {
         particulaResultante = new Particula(245, 245);
         particulaVai.setColor("red");
         particulaSobe.setColor("purple");
-        particulaResultante.setColor("yellow");
+        particulaResultante.setColor("black");
         plano.addParticula(particula);
         plano.addParticula(particulaVai);
         plano.addParticula(particulaSobe);
@@ -236,6 +239,7 @@ $(document).ready(function () {
     $("#rodar").click(function () {
     	parar();
         plano.setInclinacao(plano.getInclinacaoLiteral() + 45);
+		$(this).html(plano.getInclinacao() + "&deg");		
     });
 
     $("#eter").click(function () {
@@ -259,6 +263,15 @@ $(document).ready(function () {
         iniciar();
     });
     
+	$("#ajuda").click(function() {
+		$("#ajudaPopUp").fadeIn("slow");
+		$("#ajudaPopUpMsg").fadeIn("slow");
+	});
+	$("#ajudaPopUp").click(function() {
+		$("#ajudaPopUp").fadeOut("fast");
+		$("#ajudaPopUpMsg").fadeOut("fast");
+	});
+	
     var fim = function(igual) {
 	$("#receptor div").css("background", (igual?"yellow":"white"));
 	$("#receptor div").css("display", "block");

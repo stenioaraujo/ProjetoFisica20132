@@ -7,6 +7,10 @@ body {
 	user-select: none;
 }
 
+.clear {
+	clear: both;
+}
+
 #container {
 	position: relative;
 	top: 0;
@@ -48,7 +52,9 @@ body {
 #espelho1 { /* colocar dependencias pros navegadores */
 	top: 240px;
 	left: 390px;
-	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg););
 }
 
 #receptor { /* colocar dependencias pros navegadores */
@@ -69,18 +75,20 @@ body {
 }
 
 #lancador { /* colocar dependencias pros navegadores */
-	top: 230px;
-	left: -21;
+	top: 240px;
+	left: -90px;
+	transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
 	-webkit-transform: rotate(90deg);
 	background: lightgreen;
-	width: 40;
-	height: 40;
 }
 
 #espelhoCentro {
 	top: 245px;
 	left: 150px;
 	height: 5px;
+	transform:rotate(135deg);
+	-ms-transform:rotate(135deg);
 	-webkit-transform: rotate(135deg);
 }
 
@@ -92,7 +100,7 @@ body {
 	position: fixed;
 	bottom: 0;
 	margin: 0 auto;
-	z-index: 9;
+	z-index: 7;
 }
 
 .botao {
@@ -148,4 +156,36 @@ body {
 	height: 10px;
 	margin-left: 40px;				
 	width: 10px;
+}
+
+#ajudaPopUp {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: lightskyblue;
+	opacity: 0.7;
+	overflow: hidden;
+	z-index: 8;
+	display: none;
+}
+
+#ajudaPopUpMsg{
+	font-family: "Verdana";
+	z-index: 9;
+	position: absolute;
+	width: 100%;
+	height: 70%;
+	background: #f4f4f4;
+	margin: -17% 0 0 -10px;
+	padding: 0;
+	top: 50%;
+	box-shadow: 0px 0px 50px #8d8d8d;
+	overflow: auto;
+	display: none;
+}
+
+#ajudaPopUpMsg *{
+	margin-left: 30px;
 }
