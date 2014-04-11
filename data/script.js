@@ -37,9 +37,10 @@ var Particula = (function () {
             retorno = this.calcVelocidade(3, x, y);
         } else if (inclinacao == 90 || inclinacao == 270) {
             retorno = this.calcVelocidade(1, x, y);
+        } else {
+            retorno = this.calcVelocidade(2, x, y);
         }
 
-        retorno = this.calcVelocidade(2, x, y);
         
         $("#vLuz").html(vLuz);
         $("#vEter").html(vEter);
