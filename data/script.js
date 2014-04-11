@@ -41,6 +41,7 @@ var Particula = (function () {
 
         retorno = this.calcVelocidade(2, x, y);
         
+        $("#vLuz").html(vLuz);
         $("#vEter").html(vEter);
         $("#velocidade").html(retorno);
         $("#grau").html(inclinacao);
