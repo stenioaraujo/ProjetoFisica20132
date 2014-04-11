@@ -55,12 +55,12 @@ var Particula = (function () {
         } else if (n == 1) {
             return this.equacao(1);
         } else if (n == 2) {
-            if (this.particula.x < x) {
+            if (this.x < x) {
                 return this.equacao(2);
             }
             return this.equacao(-2);
         } else {
-            if (this.particula.x < x) {
+            if (this.x < x) {
                 return this.equacao(3);
             }
             return this.equacao(-3);
