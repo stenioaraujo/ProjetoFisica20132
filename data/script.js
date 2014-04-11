@@ -50,10 +50,13 @@ var Particula = (function () {
     };
     
     Particula.prototype.anguloAte = function(x, y) {
+    	var sinal = (new Util()).sinal;
     	if (x - this.x == 0) {
-    		return (90 + this.plano.getInclinacao()) % 360;
+    		var dY = y - this.y;
+    		return ((sinal(dY) < 0 ? 180: 0) + 90 + this.plano.getInclinacao()) % 360;
     	} else if (y - this.y == 0) {
-    		return (this.plano.getInclinacao()) % 360;
+    		var dY = y - this.y;
+    		return ((sinal(dY) < 0 ? 180: 0) + this.plano.getInclinacao()) % 360;
     	}
     }
 
