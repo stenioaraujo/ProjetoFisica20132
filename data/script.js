@@ -298,4 +298,6 @@ $(document).ready(function () {
             $("#velocidade").html("(bCima: " + particulaSobe.getVelocidade(245, 20) + ", bDireita: " + particulaVai.getVelocidade(470, 245));
         });
     };
+    iniciar();
+    parar();
 });
