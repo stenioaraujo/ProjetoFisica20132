@@ -44,7 +44,6 @@ var Particula = (function () {
         
         $("#vLuz").html(luz);
         $("#vEter").html(eter);
-        $("#velocidade").html(retorno);
         $("#grau").html(incli);
         $("#comprimento").html(this.plano.getComprimento());
 
@@ -296,6 +295,7 @@ $(document).ready(function () {
                     }
                 });
             });
+            $("#velocidade").html("(bCima: " + particulaSobe.getVelocidade(245, 20) + ", bDireita: " + particulaVai.getVelocidade(470, 245));
         });
     };
 });
