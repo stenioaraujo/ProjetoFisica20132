@@ -260,7 +260,7 @@ $(document).ready(function () {
 
             particulaVai.setPosicaoAnimate(470, 245, function () {
                 particulaVai.setPosicaoAnimate(245, 245, function () {
-                    if (particulaVai.tempoAte(245, 245) == particulaSobe.tempoAte(245, 245)) {
+                    if (particulaVai.tempoAte(245, 470) == particulaSobe.tempoAte(245, 470)) {
                         particulaResultante.setVisivel(true);
                         particulaVai.destruir();
                         particulaSobe.destruir();
@@ -276,7 +276,7 @@ $(document).ready(function () {
 
             particulaSobe.setPosicaoAnimate(245, 20, function () {
                 particulaSobe.setPosicaoAnimate(245, 245, function () {
-                    if (particulaVai.tempoAte(245, 245) != particulaSobe.tempoAte(245, 245)) {
+                    if (particulaVai.tempoAte(245, 470) != particulaSobe.tempoAte(245, 470)) {
                         particulaSobe.setPosicaoAnimate(245, 470, function () {
                         });
                     }
