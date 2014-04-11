@@ -69,7 +69,7 @@ class Particula {
 		
 		retorno = this.calcVelocidade(2, x, y);
 		
-		$("#eter").html(vEter);
+		$("#vEter").html(vEter);
 		$("#velocidade").html(retorno);
 		$("#grau").html(inclinacao);
 		$("#comprimento").html(this.plano.getComprimento());
