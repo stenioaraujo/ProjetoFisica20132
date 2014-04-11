@@ -69,10 +69,12 @@ body {
 }
 
 #lancador { /* colocar dependencias pros navegadores */
-	top: 240px;
-	left: -90px;
+	top: 230px;
+	left: -21;
 	-webkit-transform: rotate(90deg);
 	background: lightgreen;
+	width: 40;
+	height: 40;
 }
 
 #espelhoCentro {
