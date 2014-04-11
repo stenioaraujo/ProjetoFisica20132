@@ -239,7 +239,6 @@ $(document).ready(function () {
     });
 
     $("#eter").click(function () {
-    	parar();
         if (Eter) {
             $(this).css("background", "lightskyblue");
             $("#fluxoEter").css("display", "none");
@@ -249,6 +248,7 @@ $(document).ready(function () {
             $(this).css("background", "red");
             Eter = movimentarEter();
         }
+    	parar();
     });
 
     $("#parar").click(function () {
