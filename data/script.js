@@ -262,7 +262,7 @@ $(document).ready(function () {
             particula.destruir();
 
             particulaVai.setPosicaoAnimate(470, 245, function () {
-            	$("#velocidade").html("(bCima: " + particulaSobe.getVelocidade(245, 20) + ", bDireita: " + particulaVai.getVelocidade(470, 245));
+            	$("#velocidade").html("(bCima: " + particulaSobe.getVelocidade(245, 245) + ", bDireita: " + particulaVai.getVelocidade(245, 245));
         	particulaVai.setPosicaoAnimate(245, 245, function () {
                     if (particulaVai.tempoAte(245, 470) == particulaSobe.tempoAte(245, 470)) {
                         particulaResultante.setVisivel(true);
@@ -279,7 +279,7 @@ $(document).ready(function () {
             });
 
             particulaSobe.setPosicaoAnimate(245, 20, function () {
-                $("#velocidade").html("(bCima: " + particulaSobe.getVelocidade(245, 20) + ", bDireita: " + particulaVai.getVelocidade(470, 245));
+                $("#velocidade").html("(bCima: " + particulaSobe.getVelocidade(245, 245) + ", bDireita: " + particulaVai.getVelocidade(245, 245));
         	particulaSobe.setPosicaoAnimate(245, 245, function () {
                     if (particulaVai.tempoAte(245, 470) != particulaSobe.tempoAte(245, 470)) {
                         particulaSobe.setPosicaoAnimate(245, 470, function () {
