@@ -50,8 +50,20 @@ body {
 }
 
 #espelho2 { /* colocar dependencias pros navegadores */
-	bottom: 0;
-	left: 150px;
+	bottom: -13px;
+	left: 225;
+	width: 50px;
+	height: 36px;
+}
+
+#espelho2 div {
+	height: 20px;
+	width: 20px;
+	display: none;
+	background: #fff;
+	border-radius: 52;
+	margin: 5px auto 0;
+	border: 3px solid black;
 }
 
 #lancador { /* colocar dependencias pros navegadores */
