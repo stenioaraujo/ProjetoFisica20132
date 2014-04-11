@@ -207,7 +207,7 @@ class Plano {
 	}
 	
 	getVEter(): number {
-		if (this.eterAtivado) return 4.6;
+		if (this.eterAtivado) return vEter;
 		return 0;
 	}
 	changeEter(b: boolean): void {
