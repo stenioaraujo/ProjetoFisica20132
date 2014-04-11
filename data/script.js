@@ -239,6 +239,7 @@ $(document).ready(function () {
     });
 
     $("#eter").click(function () {
+    	parar();
         if (Eter) {
             $(this).css("background", "lightskyblue");
             $("#fluxoEter").css("display", "none");
