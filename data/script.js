@@ -234,6 +234,7 @@ $(document).ready(function () {
     };
 
     $("#rodar").click(function () {
+    	parar();
         plano.setInclinacao(plano.getInclinacaoLiteral() + 45);
     });
 
