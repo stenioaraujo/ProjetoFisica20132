@@ -17,6 +17,7 @@ var Particula = (function () {
         this.particula.css("background", color);
     };
 
+
     Particula.prototype.getPosicao = function () {
         return { "x": this.x, "y": this.y };
     };
@@ -29,48 +30,31 @@ var Particula = (function () {
         var luz = this.plano.getVLuz();
         var eter = this.plano.getVEter();
         var incli = this.plano.getInclinacao();
-        var retorno;
-
-        if (eter == 0) {
-            retorno = this.calcVelocidade(0, x, y);
-        } else if (incli == 0 || incli == 180) {
-            retorno = this.calcVelocidade(3, x, y);
-        } else if (incli == 90 || incli == 270) {
-            retorno = this.calcVelocidade(1, x, y);
-        } else {
-            retorno = this.calcVelocidade(2, x, y);
+        var velocidades = {
+        	0:   25,
+        	45:  24,
+        	90:  23,
+        	135: 21,
+        	180: 19,
+        	225: 21,
+        	270: 23,
+        	315: 24
         }
-
-        
         $("#vLuz").html(luz);
         $("#vEter").html(eter);
         $("#grau").html(incli);
         $("#comprimento").html(this.plano.getComprimento());
-
-        return retorno;
+        
+        return velocidades[this.anguloAte(x, y)];
     };
-
-    Particula.prototype.calcVelocidade = function (n, x, y) {
-        if (n == 0) {
-            return this.equacao(0);
-        } else if (n == 1) {
-            return this.equacao(1);
-        } else if (n == 2) {
-            if ((new Util).sinal(this.x - x) < 0 && ((this.plano.getInclinacao() == 45) || (this.plano.getInclinacao() == 315))) {
-                return this.equacao(2);
-            }
-            return this.equacao(-2);
-        } else {
-            if ((new Util).sinal(this.x - x) > 0 && (this.plano.getInclinacao() == 0)) {
-                return this.equacao(3);
-            }
-            return this.equacao(-3);
-        }
-    };
-
-    Particula.prototype.equacao = function (n) {
-        return ((((this.plano.getComprimento()) / this.plano.getVLuz())*(1+(10*(((this.plano.getVEter()*this.plano.getVEter()) / (this.plano.getVLuz()*this.plano.getVLuz()))*n)))*1000))/this.plano.getComprimento();
-    };
+    
+    Particula.prototype.anguloAte = function(x, y) {
+    	if (x - this.x == 0) {
+    		return (90 + this.plano.getInclinacao()) % 360;
+    	} else if (y - this.y == 0) {
+    		return (this.plano.getInclinacao()) % 360;
+    	}
+    }
 
     Particula.prototype.setPosicao = function (x, y) {
         this.x = x;
