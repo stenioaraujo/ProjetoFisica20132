@@ -259,8 +259,8 @@ $(document).ready(function () {
     });
     
     var fim = function(igual) {
+	$("#receptor div").css("background", (igual?"yellow":"white"));
 	$("#receptor div").css("display", "block");
-	$("#receptor div").css("background", (igual?"yellow":$("#receptor div").css("background")));
     };
     
     var lancar = function () {
