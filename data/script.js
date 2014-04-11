@@ -324,8 +324,8 @@ $(document).ready(function () {
     		$(".linhaFluxo").css("margin-left", movimento);
     	}, 50);
     	
-    	return fluxoEter
-    }
+    	return fluxoEter;
+    };
     
     criarFluxoEter();
     iniciar();
