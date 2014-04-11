@@ -260,7 +260,7 @@ $(document).ready(function () {
     
     var fim = function(igual) {
 	$("#receptor div").css("display", "block");
-	$("#background div").css("background", igual?"yellow":$("#background div").css("background"));
+	$("#receptor div").css("background", (igual?"yellow":$("#receptor div").css("background")));
     };
     
     var lancar = function () {
