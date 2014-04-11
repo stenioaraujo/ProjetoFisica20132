@@ -104,3 +104,29 @@ body {
 	width: 10px;
 	height: 10px;
 }
+
+#fluxoEter {
+	position: absolute;
+	display: none;
+	height: 107%;
+	margin-top: -10px;
+	overflow: hidden;
+	width: 100%;
+	z-index: 0;
+}
+
+.linhaFluxo {
+	height: 40px;
+	width: 4000px;
+	clear: both;
+	overflow: hidden;
+}
+
+.fluxo {
+	background: red;
+	display: block;
+	float: left;
+	height: 10px;
+	margin-left: 40px;				
+	width: 10px;
+}
